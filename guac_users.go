@@ -2,7 +2,6 @@ package guacamole
 
 import (
 	"encoding/json"
-
 )
 
 func (g *Guac) CreateUser(user *GuacUser) (GuacUser, error) {
@@ -29,6 +28,14 @@ func (g *Guac) ReadUser(user *GuacUser) (GuacUser, error) {
 		return GuacUser{}, err
 	}
 	return ret, nil
+}
+
+func (g *Guac) UpdatePW(user *GuacUser) error {
+	_, err := g.Call("PUT", "/api/session/data/{{ .Datasource }}/users/"+user.Username+"/password", nil, user)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (g *Guac) UpdateUser(user *GuacUser) error {
