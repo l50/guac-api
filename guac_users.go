@@ -2,6 +2,7 @@ package guacamole
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 func (g *Guac) CreateUser(user *GuacUser) (GuacUser, error) {
@@ -31,7 +32,9 @@ func (g *Guac) ReadUser(user *GuacUser) (GuacUser, error) {
 }
 
 func (g *Guac) UpdatePW(user *GuacUser) error {
+	fmt.Println(user.Username)
 	_, err := g.Call("PUT", "/api/session/data/{{ .Datasource }}/users/"+user.Username+"/password", nil, user)
+	// _, err := g.Call("PUT", "/api/session/data/{{ .Datasource }}/users/guacadmin/password", nil, user)
 	if err != nil {
 		return err
 	}
